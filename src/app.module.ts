@@ -9,7 +9,7 @@ import { User } from './users/entities/user.entity';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
-  imports: [UsersModule ,
+  imports: [UsersModule ,NotificationsModule,
   TypeOrmModule.forFeature([User]),
   TypeOrmModule.forRoot(typeOrmConfig) ,
   NotificationsModule,EventEmitterModule.forRoot(),

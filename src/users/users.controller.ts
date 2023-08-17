@@ -16,11 +16,12 @@ export class UsersController{
 async create(@Body() 
   user:User)
 {
-  this.userService.createUser(user);
+  const addUSER = await   this.userService.createUserWithNotification(user);
+  return {message : 'creer avec succces' ,user}
 // notif
-const message = `${user.firstname} crée`
-const createdUser = await this.userService.createUser(user);
-  return {message: 'User added success' ,  user: createdUser};
+// const message = `${user.firstname} crée`
+// const createdUser = await this.userService.createUserWithNotification(user);
+//   return {message: 'User added success' ,  user: createdUser};
 } 
 
  @Get()
@@ -31,15 +32,19 @@ const createdUser = await this.userService.createUser(user);
  }
 
  @Patch(':id')
- update(@Param('id') id: number, @Body() users:User)
+ async update(@Param('id') id: number, @Body() user:User)
  {
-    return this.userService.updateUser(id,users);
+    const updateUser = await  this.userService.updateUser(id,user);
+    // creation de la notif
+    // const message = `${user.firstname} updated`;
+    // await this.notificationService.createNotification(updateUser , message);
+    return {message : 'user updated' , user : updateUser};
  }
 
 @Delete(':id')
 delete(@Param('id') id: number)
 {
-    return this.userService.deleteUser(id);
+    return this.userService.deleteUserWithNotification(id);
 }
 
 }
