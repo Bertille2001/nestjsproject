@@ -1,50 +1,37 @@
-// user.controller.ts
-import { Controller, Get, Post, Put, Delete, Param, Body, Patch } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { DeleteResult, UpdateResult } from 'typeorm';
-import { User } from './entities/user.entity';
+
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './users.service';
-import { NotificationsService } from 'src/notifications/notifications.service';
+import {Body,Controller,Delete,Get,Param,Post,Patch,} from '@nestjs/common';
 
 @Controller('users')
-export class UsersController{
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
- constructor(private readonly userService: UserService,
-  private readonly notificationService : NotificationsService){}  
- 
-@Post()
-async create(@Body() 
-  user:User)
-{
-  const addUSER = await   this.userService.createUserWithNotification(user);
-  return {message : 'creer avec succces' ,user}
-// notif
-// const message = `${user.firstname} crée`
-// const createdUser = await this.userService.createUserWithNotification(user);
-//   return {message: 'User added success' ,  user: createdUser};
-} 
+  @Post()
+  async createUser(@Body() createUserDto: CreateUserDto) {
+    return await this.userService.createUser(createUserDto);
+  }
 
- @Get()
- findAll()
- {
-    
-    return this.userService.findAll();
- }
+  @Get()
+  async getAllUser() {
+    return await this.userService.getAllUsers();
+  }
+  @Get(':id')
+  async getUser(@Param('id') id: number) {
+    return await this.userService.getUser(id);
+  }
 
- @Patch(':id')
- async update(@Param('id') id: number, @Body() user:User)
- {
-    const updateUser = await  this.userService.updateUser(id,user);
-    // creation de la notif
-    // const message = `${user.firstname} updated`;
-    // await this.notificationService.createNotification(updateUser , message);
-    return {message : 'user updated' , user : updateUser};
- }
+  @Patch(':id')
+  async updateUser(
+    @Param('id') id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return await this.userService.updateUser(id, updateUserDto);
+  }
 
-@Delete(':id')
-delete(@Param('id') id: number)
-{
-    return this.userService.deleteUserWithNotification(id);
-}
-
+  @Delete(':id')
+  async deleteUser(@Param('id') id: number) {
+    return await this.userService.deleteUser(id);
+  }
 }
