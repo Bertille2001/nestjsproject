@@ -3,8 +3,6 @@ import {Injectable,NotFoundException,InternalServerErrorException, BadRequestExc
 import { DataSource, QueryRunner, Connection } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
-
 import { normalize } from 'path';
 import { InjectConnection } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
@@ -21,7 +19,7 @@ export class UserService {
     private readonly connection: Connection,
   ) {}
 
-  // creation de l'utilisateur
+  // créons l utilisateur
 
   async createUser(createUserDto: CreateUserDto) {
     const queryRunner = this.connection.createQueryRunner();
@@ -37,7 +35,7 @@ export class UserService {
 
       await queryRunner.manager.save(user);
 
-      // // Créer automatiquement une notification pour l'utilisateur
+      // // Créer automatiquement une notification 
       const message = `created ${user.firstname}`;
       const notif = new CreateNotificationDto();
       notif.message = message;
