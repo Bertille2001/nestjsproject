@@ -8,6 +8,7 @@ import { InjectConnection } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { CreateNotificationDto } from 'src/notifications/dto/create-notification.dto';
 import { NotificationService } from 'src/notifications/notifications.service';
+import { NotificationType } from 'src/notification-type.enum';
 
 
 @Injectable()
@@ -38,7 +39,7 @@ export class UserService {
       // // Créer automatiquement une notification 
       const message = `created ${user.firstname}`;
       const notif = new CreateNotificationDto();
-      notif.message = message;
+      notif.message = NotificationType.CREATE;
 
       await this.notificationService.createNotification(
         queryRunner,
@@ -76,6 +77,7 @@ export class UserService {
       const message = `updated ${user.firstname}`;
       const notif = new CreateNotificationDto();
       notif.message = message;
+      notif.message = NotificationType.UPDATE;
 
       await this.notificationService.createNotification(
         queryRunner,
@@ -109,6 +111,7 @@ export class UserService {
       const message = `deleted ${user.firstname}`;
       const notif = new CreateNotificationDto();
       notif.message = message;
+      notif.message = NotificationType.DELETE;
 
       await this.notificationService.createNotification(
         queryRunner,

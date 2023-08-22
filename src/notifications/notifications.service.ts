@@ -6,6 +6,7 @@ import { Notification } from './entities/notification.entity';
 import { User } from 'src/users/entities/user.entity';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { NotificationType } from 'src/notification-type.enum';
 
 @Injectable()
 export class NotificationService {
@@ -19,9 +20,9 @@ export class NotificationService {
   ) {
     try {
       const notification = new Notification();
-
       notification.message = dtoNotification.message;
       notification.user = user;
+      // notification.type = NotificationType.INFO;
 
       queryRunner.manager.save(notification);
       //    return userNotification;

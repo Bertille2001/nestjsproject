@@ -13,6 +13,6 @@ export class CreateNotificationDto {
       @IsNotEmpty()
       userId : number;
     
-    
+       
 
 }
