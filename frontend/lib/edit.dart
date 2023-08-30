@@ -1,271 +1,179 @@
-// import 'package:flutter/material.dart';
-
-// import 'package:woelab/recup-page.dart';
-
-
-// class CreatePage extends StatelessWidget {
-   
-
-
-//     final TextEditingController firstNameController = TextEditingController();
-//   final TextEditingController lastNameController = TextEditingController();
-//   final TextEditingController ageController = TextEditingController();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Colors.black,
-//         leading: GestureDetector(
-//           onTap: () {
-//             Navigator.of(context).pop();
-//           },
-//           child: const Icon(Icons.arrow_back,
-//               color: Color.fromARGB(255, 245, 244, 244)),
-//         ),
-//         title: const Text('Create user'),
-//       ),
-//       body: SingleChildScrollView(
-//         child: Container(
-//           color: Colors.white,
-//           padding: const EdgeInsets.all(16.0),
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             crossAxisAlignment: CrossAxisAlignment.center,
-           
-//             children: [
-//               const SizedBox(height: 50.0),
-//               const CircleAvatar(
-//                 radius: 50.0,
-//                 backgroundColor: Color.fromARGB(255, 199, 197, 197),
-//                 child: Icon(Icons.person, color: Colors.black, size: 40.0),
-//               ),
-//               const SizedBox(height: 20.0),
-//               const TextField(
-//                 style: TextStyle(color: Colors.black),
-//                 decoration: InputDecoration(
-//                   labelText: 'firstname',
-//                   labelStyle: TextStyle(color: Colors.black),
-//                   border: OutlineInputBorder(),
-//                 ),
-
-
-//               ),
-//               const SizedBox(height: 12.0),
-              
-//               const SizedBox(height: 20.0),
-//               const TextField(
-//                 style: TextStyle(color: Colors.black),
-//                 decoration: InputDecoration(
-//                   labelText: 'Age',
-//                   labelStyle: TextStyle(color: Colors.black),
-//                   border: OutlineInputBorder(),
-//                 ),
-//                 obscureText: true,
-//               ),
-//               const SizedBox(height: 20.0),
-//               ElevatedButton(
-//                 onPressed: () {
-//                   // Afficher une boîte de dialogue de confirmation
-//                   showDialog(
-//                     context: context,
-//                     builder: (BuildContext context) {
-//                       return AlertDialog(
-//                         title: Text('Enregistrer'),
-//                         content: Text('Voulez-vous enregistrer les données ?'),
-//                         actions: <Widget>[
-//                           TextButton(
-//                             onPressed: () {
-//                               // Fermer la boîte de dialogue
-//                               Navigator.of(context).pop();
-//                             },
-//                             child: Text('Non'),
-//                           ),
-//                           ElevatedButton(
-//                             onPressed: () {
-                              
-//                               // Naviguer vers la page de profil
-//                               Navigator.push(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                       builder: (context) => const UserPage()));
-//                             },
-//                             style: ElevatedButton.styleFrom(
-//                               primary: Colors.black,
-//                               onPrimary: Colors.white,
-//                             ),
-//                             child: Text('Oui'),
-//                           ),
-//                         ],
-//                       );
-//                     },
-//                   );
-//                 },
-//                 style: ElevatedButton.styleFrom(
-//                   foregroundColor: Colors.white,
-//                   backgroundColor: Colors.black,
-//                   textStyle: const TextStyle(fontSize: 16),
-//                   minimumSize: const Size(double.infinity, 49),
-//                 ),
-//                 child: const Text('save'),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-
-
-
-
-
-
-
-
-
 import 'package:flutter/material.dart';
-import 'package:woelab/profil-page.dart';
 import 'package:woelab/recup-page.dart';
 
+class EditPage extends StatelessWidget {
+  final Map<String, dynamic> user;
+  final VoidCallback? onDelete;
 
-class Edit extends StatelessWidget {
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController ageController = TextEditingController();
+  EditPage({required this.user, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Edit User'),
         backgroundColor: Colors.black,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 245, 244, 244)),
-        ),
-        title: const Text('Edit users'),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 50.0),
-              const CircleAvatar(
-                radius: 50.0,
-                backgroundColor: Color.fromARGB(255, 199, 197, 197),
-                child: Icon(Icons.person, color: Colors.black, size: 40.0),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Card(
+              elevation: 20,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
               ),
-              const SizedBox(height: 20.0),
-              TextField(
-                controller: firstNameController,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  labelText: 'Firstname',
-                  labelStyle: TextStyle(color: Colors.black),
-                  border: OutlineInputBorder(),
+              child: Container(
+                width: 300,
+                height: 300,
+                padding: const EdgeInsets.all(20),
+                color: Colors.grey[300],
+                child: Column(
+                  children: [
+                    SizedBox(height: 20),
+                    const CircleAvatar(
+                      radius: 50.0,
+                      backgroundColor: Color.fromARGB(255, 199, 197, 197),
+                      child:
+                          Icon(Icons.person, color: Colors.black, size: 40.0),
+                    ),
+                    SizedBox(height: 40),
+                    Text(
+                      'Name: ${user["name"]}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Age: ${user["age"]}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 12.0),
-              TextField(
-                controller: lastNameController,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  labelText: 'Lastname',
-                  labelStyle: TextStyle(color: Colors.black),
-                  border: OutlineInputBorder(),
+            ),
+            const SizedBox(height: 70),
+            Center(
+              child: Container(
+                width: 300,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _showEditConfirmationDialog(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                       minimumSize: const Size(double.infinity, 49),
+                       
+                    primary: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Edit User',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(height: 20.0),
-              TextField(
-                controller: ageController,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  labelText: 'Age',
-                  labelStyle: TextStyle(color: Colors.black),
-                  border: OutlineInputBorder(),
+            ),
+            const SizedBox(height: 10),
+            Center(
+              child: Container(
+                width: 300,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _showDeleteConfirmationDialog(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                       minimumSize: const Size(double.infinity, 49),
+                    primary: Colors.grey[300],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Delete User',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  if (firstNameController.text.isEmpty || lastNameController.text.isEmpty || ageController.text.isEmpty) {
-                    // Afficher une erreur si un champ est vide
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Erreur'),
-                          content: Text('Veuillez remplir tous les champs.'),
-                          actions: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  } else {
-                    // Afficher la boîte de dialogue de confirmation
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Enregistrer'),
-                          content: Text('Voulez-vous enregistrer les données ?'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('Non'),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Naviguer vers la page de profil
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const UserPage (),
-                                  ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.black,
-                                onPrimary: Colors.white,
-                              ),
-                              child: Text('Oui'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.black,
-                  textStyle: TextStyle(fontSize: 16),
-                  minimumSize: const Size(double.infinity, 49),
-                ),
-                child: const Text('Save change'),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );
+  }
+
+  Future<void> _showEditConfirmationDialog(BuildContext context) async {
+    final bool shouldEdit = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmation de modification'),
+          content: const Text('voulez vous vraiment modifier?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); // Confirm edit
+              },
+              child: const Text('oui'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // Cancel edit
+              },
+              child: const Text('non'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (shouldEdit != null && shouldEdit) {
+      // Navigate to EditProfilePage
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => UserPage()),
+      );
+    }
+  }
+
+  Future<void> _showDeleteConfirmationDialog(BuildContext context) async {
+    final bool shouldDelete = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmation de suppression'),
+          content: const Text('vous etes sur de supprimer?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); // Confirm delete
+              },
+              child: const Text('oui'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // Cancel delete
+              },
+              child: const Text('Non'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (shouldDelete != null && shouldDelete) {
+      onDelete?.call(); // Supprimer l'utilisateur de la liste
+      Navigator.pop(context); // Revenir à la liste des utilisateurs
+    }
   }
 }
 
